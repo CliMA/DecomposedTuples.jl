@@ -86,6 +86,14 @@ function hasindex(sc::SparseContainer{SIM}, i::Int) where {SIM}
     end
 end
 
+"""
+    dispatch(f::F, sparse_ntuples::Tuple, i, args...)
+
+Perform an unrolled loop over `j ∈ 1:length(sparse_ntuples)` and call
+    `f(sparse_ntuples[j][i], args...)` if `hasindex(sparse_ntuples[j], i)`
+"""
+function dispatch end
+
 @inline function dispatch(f::F, sparse_ntuples::Tuple, i, args...) where {F}
     if hasindex(first(sparse_ntuples), i)
         f(first(sparse_ntuples)[i], args...)
