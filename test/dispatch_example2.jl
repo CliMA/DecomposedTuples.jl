@@ -1,11 +1,11 @@
 #=
 using Revise; include(joinpath("test", "dispatch_example1.jl"))
 =#
-import TuplesOfNTuples as DT
+import TuplesOfNTuples as ToNT
 
 function example!(tonts, f, N::Int, counter)
     for i in 1:N
-        DT.dispatch(f, tonts, i, counter)
+        ToNT.dispatch(f, tonts, i, counter)
     end
     return nothing
 end
@@ -18,11 +18,11 @@ function f!(::Foo1, counter)
 end
 
 tup = (Foo1(), Foo1(), Foo1(), Foo1(), Foo1())
-dtup = DT.TupleOfNTuples(tup)
+dtup = ToNT.TupleOfNTuples(tup)
 
 counter = Int[0]
 example!(dtup, f!, length(tup), counter)
 using Test
 @test counter[1] == 5
 
-@inferred DT.dispatch(f!, dtup, 1, counter)
+@inferred ToNT.dispatch(f!, dtup, 1, counter)

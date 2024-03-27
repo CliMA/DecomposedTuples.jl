@@ -57,9 +57,9 @@ which can be indexed in a similar way to the original
 tuple:
 
 ```julia
-import TuplesOfNTuples as DT
+import TuplesOfNTuples as ToNT
 tup = (Foo1(), Foo2(), Foo3(), Foo4(), Foo3(), Foo3())
-dtup = DT.TupleOfNTuples(tup)
+dtup = ToNT.TupleOfNTuples(tup)
 @test dtup.sparse_ntuples[1][1] === tup[1]
 @test dtup.sparse_ntuples[2][2] === tup[2]
 @test dtup.sparse_ntuples[3][3] === tup[3]

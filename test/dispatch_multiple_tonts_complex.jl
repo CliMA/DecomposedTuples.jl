@@ -1,16 +1,16 @@
 #=
 using Revise; include(joinpath("test", "dispatch_multiple_tonts_complex.jl"))
 =#
-import TuplesOfNTuples as DT
+import TuplesOfNTuples as ToNT
 
 
 function inner_dispatch(dtB, g!::G!, ctr, dtA, j) where {G!}
-    DT.dispatch(g!, dtA, j, dtB, ctr)
+    ToNT.dispatch(g!, dtA, j, dtB, ctr)
 end
 
 function example!(dtupA, dtupB, f!, N::Int, counter)
     for i in 1:N
-        DT.dispatch(inner_dispatch, dtupB, i, f!, counter, dtupA, i)
+        ToNT.dispatch(inner_dispatch, dtupB, i, f!, counter, dtupA, i)
     end
     return nothing
 end
@@ -48,8 +48,8 @@ end
 
 tupA = (Foo1(), Foo2(), Foo3(), Foo4(), Foo3(), Foo3()) # 1, 100, 1000, 10000, 1000, 100000
 tupB = (Bar1(), Bar1(), Bar4(), Bar2(), Bar4(), Bar3()) # 1, 100, 1000, 10000, 1000, 100000
-dtupA = DT.TupleOfNTuples(tupA)
-dtupB = DT.TupleOfNTuples(tupB)
+dtupA = ToNT.TupleOfNTuples(tupA)
+dtupB = ToNT.TupleOfNTuples(tupB)
 
 counter = Int[0]
 example!(dtupA, dtupB, f!, length(tupA), counter)

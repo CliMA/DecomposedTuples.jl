@@ -1,7 +1,7 @@
 #=
 using Revise; include(joinpath("test", "dispatch_basic.jl"))
 =#
-import TuplesOfNTuples as DT
+import TuplesOfNTuples as ToNT
 
 function example!(dtup, f, N::Int, counter)
     for i in 1:N # cannot be unrolled
@@ -10,7 +10,7 @@ function example!(dtup, f, N::Int, counter)
 
         # Inlined, and fully unrolled
 
-        DT.dispatch(f, dtup, i, args...) # effectively calls f(tup[i], args...)
+        ToNT.dispatch(f, dtup, i, args...) # effectively calls f(tup[i], args...)
 
         # This unrolls to:
         #
@@ -53,7 +53,7 @@ function f!(::Foo4, counter)
 end
 
 tup = (Foo1(), Foo2(), Foo3(), Foo4())
-dtup = DT.TupleOfNTuples(tup)
+dtup = ToNT.TupleOfNTuples(tup)
 
 counter = Int[0]
 example!(dtup, f!, length(tup), counter)
@@ -63,7 +63,7 @@ import InteractiveUtils
 using Test
 @test counter[1] == sum((1, 100, 1000, 10000))
 
-@inferred DT.dispatch(f!, dtup, 1, counter)
+@inferred ToNT.dispatch(f!, dtup, 1, counter)
 
 
 nothing
