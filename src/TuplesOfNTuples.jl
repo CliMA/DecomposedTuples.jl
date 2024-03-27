@@ -70,6 +70,7 @@ dtup = DT.TupleOfNTuples(tup)
 """
 struct TupleOfNTuples{SC}
     sparse_ntuples::SC
+    # TODO: specialize on NTuple input
     function TupleOfNTuples(tup::Tuple)
         dict_vals = decompose_to_dict_values(tup)
         sparse_ntuples = extract_entries_and_indices(dict_vals)
@@ -115,7 +116,7 @@ end
 
 @inline function dispatch(f::F, sparse_ntuples::Tuple{}, i, args...) where {F} end
 
-@inline dispatch(f::F, decomposed_tup::TupleOfNTuples, i, args...) where {F} =
-    dispatch(f, decomposed_tup.sparse_ntuples, i, args...)
+@inline dispatch(f::F, tonts::TupleOfNTuples, i, args...) where {F} =
+    dispatch(f, tonts.sparse_ntuples, i, args...)
 
 end # module

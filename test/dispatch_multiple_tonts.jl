@@ -1,5 +1,5 @@
 #=
-using Revise; include(joinpath("test", "dispatch_multiple_decomposed_tuples.jl"))
+using Revise; include(joinpath("test", "dispatch_multiple_tonts.jl"))
 =#
 import TuplesOfNTuples as DT
 

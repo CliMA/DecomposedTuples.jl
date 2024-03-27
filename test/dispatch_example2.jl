@@ -3,9 +3,9 @@ using Revise; include(joinpath("test", "dispatch_example1.jl"))
 =#
 import TuplesOfNTuples as DT
 
-function example!(decomposed_tup, f, N::Int, counter)
+function example!(tonts, f, N::Int, counter)
     for i in 1:N
-        DT.dispatch(f, decomposed_tup, i, counter)
+        DT.dispatch(f, tonts, i, counter)
     end
     return nothing
 end

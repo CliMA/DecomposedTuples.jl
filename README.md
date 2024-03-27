@@ -1,19 +1,19 @@
 # TuplesOfNTuples.jl
 
-A Julia package for decomposing tuples into a collection of NTuples.
+A Julia package for converting non-uniform `Tuple`s into a `Tuple` of `NTuple`s.
 
 This package allows users to effectively index into a non-homogeneous tuple with dynamic indexes in a type-stable (and gpu-friendly) way, assuming that the given tuple can be transformed a-priori into a `TupleOfNTuples`. Here is an example:
 
 ```julia
 import TuplesOfNTuples as DT
 
-function example!(decomposed_tup, f, N::Int, counter)
+function example!(tonts, f, N::Int, counter)
     for i in 1:N # cannot be unrolled
         # f(i, tup, args...) where tup is in args.
         args = (counter,)
 
         # Inlined, and fully unrolled
-        DT.dispatch(f, decomposed_tup, i, args...) # effectively calls f(tup[i], args...)
+        DT.dispatch(f, tonts, i, args...) # effectively calls f(tup[i], args...)
 
         # This unrolls to:
         #
@@ -56,12 +56,12 @@ function f!(::Foo4, counter)
 end
 
 tup = (Foo1(), Foo2(), Foo3(), Foo4())
-dtup = DT.TupleOfNTuples(tup)
+tonts = DT.TupleOfNTuples(tup)
 
 counter = Int[0]
-example!(dtup, f!, length(tup), counter)
+example!(tonts, f!, length(tup), counter)
 using Test
 @test counter[1] == sum((1,100,1000,10000))
 
-@inferred DT.dispatch(f!, dtup, 1, counter)
+@inferred DT.dispatch(f!, tonts, 1, counter)
 ```

@@ -11,6 +11,6 @@ using SafeTestsets
 @safetestset "dispatch_regular_tuple" begin; @time include("dispatch_regular_tuple.jl"); end
 @safetestset "dispatch_example1" begin; @time include("dispatch_example1.jl"); end
 @safetestset "dispatch_example2" begin; @time include("dispatch_example2.jl"); end
-@safetestset "dispatch_multiple_decomposed_tuples" begin; @time include("dispatch_multiple_decomposed_tuples.jl"); end
-@safetestset "dispatch_multiple_decomposed_tuples_complex" begin; @time include("dispatch_multiple_decomposed_tuples_complex.jl"); end
+@safetestset "dispatch_multiple_tonts" begin; @time include("dispatch_multiple_tonts.jl"); end
+@safetestset "dispatch_multiple_tonts_complex" begin; @time include("dispatch_multiple_tonts_complex.jl"); end
 #! format: on
