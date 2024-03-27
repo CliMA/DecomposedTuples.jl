@@ -1,7 +1,7 @@
 #=
 using Revise; include(joinpath("test", "dispatch_basic.jl"))
 =#
-import DecomposedTuples as DT
+import TuplesOfNTuples as DT
 
 function example!(dtup, f, N::Int, counter)
     for i in 1:N # cannot be unrolled
@@ -53,7 +53,7 @@ function f!(::Foo4, counter)
 end
 
 tup = (Foo1(), Foo2(), Foo3(), Foo4())
-dtup = DT.DecomposedTuple(tup)
+dtup = DT.TupleOfNTuples(tup)
 
 counter = Int[0]
 example!(dtup, f!, length(tup), counter)

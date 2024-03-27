@@ -1,11 +1,11 @@
 #=
-using Revise; include(joinpath("test", "decomposed_tuples.jl"))
+using Revise; include(joinpath("test", "tuple_of_ntuples.jl"))
 =#
-import DecomposedTuples as DT
+import TuplesOfNTuples as DT
 
 function main!(tup)
     for i in 1:3
-        dtup = DT.DecomposedTuple(tup)
+        dtup = DT.TupleOfNTuples(tup)
     end
     return nothing
 end
@@ -21,7 +21,7 @@ using Test
 @test_broken p_allocated == 0
 
 tup = (Foo1(), Foo2(), Foo3(), Foo4(), Foo3(), Foo3())
-dtup = DT.DecomposedTuple(tup)
+dtup = DT.TupleOfNTuples(tup)
 @test dtup.sparse_ntuples[1][1] === tup[1]
 @test dtup.sparse_ntuples[2][2] === tup[2]
 @test dtup.sparse_ntuples[3][3] === tup[3]

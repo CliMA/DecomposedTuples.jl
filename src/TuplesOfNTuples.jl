@@ -1,4 +1,4 @@
-module DecomposedTuples
+module TuplesOfNTuples
 
 import OrderedCollections
 
@@ -50,16 +50,16 @@ function extract_entries_and_indices(dict_vals)
 end
 
 """
-    DecomposedTuple
+    TupleOfNTuples
 
 Decompose a `Tuple` into a collection of `NTuples`,
 which can be indexed in a similar way to the original
 tuple:
 
 ```julia
-import DecomposedTuples as DT
+import TuplesOfNTuples as DT
 tup = (Foo1(), Foo2(), Foo3(), Foo4(), Foo3(), Foo3())
-dtup = DT.DecomposedTuple(tup)
+dtup = DT.TupleOfNTuples(tup)
 @test dtup.sparse_ntuples[1][1] === tup[1]
 @test dtup.sparse_ntuples[2][2] === tup[2]
 @test dtup.sparse_ntuples[3][3] === tup[3]
@@ -68,9 +68,9 @@ dtup = DT.DecomposedTuple(tup)
 @test dtup.sparse_ntuples[3][6] === tup[6]
 ```
 """
-struct DecomposedTuple{SC}
+struct TupleOfNTuples{SC}
     sparse_ntuples::SC
-    function DecomposedTuple(tup::Tuple)
+    function TupleOfNTuples(tup::Tuple)
         dict_vals = decompose_to_dict_values(tup)
         sparse_ntuples = extract_entries_and_indices(dict_vals)
         SC = typeof(sparse_ntuples)
@@ -107,7 +107,7 @@ end
 
 @inline function dispatch(f::F, sparse_ntuples::Tuple{}, i, args...) where {F} end
 
-@inline dispatch(f::F, decomposed_tup::DecomposedTuple, i, args...) where {F} =
+@inline dispatch(f::F, decomposed_tup::TupleOfNTuples, i, args...) where {F} =
     dispatch(f, decomposed_tup.sparse_ntuples, i, args...)
 
 end # module

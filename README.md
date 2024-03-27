@@ -1,11 +1,11 @@
-# DecomposedTuples.jl
+# TuplesOfNTuples.jl
 
 A Julia package for decomposing tuples into a collection of NTuples.
 
-This package allows users to effectively index into a non-homogeneous tuple with dynamic indexes in a type-stable (and gpu-friendly) way, assuming that the given tuple can be transformed a-priori into a `DecomposedTuple`. Here is an example:
+This package allows users to effectively index into a non-homogeneous tuple with dynamic indexes in a type-stable (and gpu-friendly) way, assuming that the given tuple can be transformed a-priori into a `TupleOfNTuples`. Here is an example:
 
 ```julia
-import DecomposedTuples as DT
+import TuplesOfNTuples as DT
 
 function example!(decomposed_tup, f, N::Int, counter)
     for i in 1:N # cannot be unrolled
@@ -56,7 +56,7 @@ function f!(::Foo4, counter)
 end
 
 tup = (Foo1(), Foo2(), Foo3(), Foo4())
-dtup = DT.DecomposedTuple(tup)
+dtup = DT.TupleOfNTuples(tup)
 
 counter = Int[0]
 example!(dtup, f!, length(tup), counter)

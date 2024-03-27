@@ -1,7 +1,7 @@
 #=
 using Revise; include(joinpath("test", "dispatch_multiple_decomposed_tuples_complex.jl"))
 =#
-import DecomposedTuples as DT
+import TuplesOfNTuples as DT
 
 
 function inner_dispatch(dtB, g!::G!, ctr, dtA, j) where {G!}
@@ -48,8 +48,8 @@ end
 
 tupA = (Foo1(), Foo2(), Foo3(), Foo4(), Foo3(), Foo3()) # 1, 100, 1000, 10000, 1000, 100000
 tupB = (Bar1(), Bar1(), Bar4(), Bar2(), Bar4(), Bar3()) # 1, 100, 1000, 10000, 1000, 100000
-dtupA = DT.DecomposedTuple(tupA)
-dtupB = DT.DecomposedTuple(tupB)
+dtupA = DT.TupleOfNTuples(tupA)
+dtupB = DT.TupleOfNTuples(tupB)
 
 counter = Int[0]
 example!(dtupA, dtupB, f!, length(tupA), counter)

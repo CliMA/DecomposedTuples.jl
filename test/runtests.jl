@@ -6,7 +6,7 @@ using SafeTestsets
 
 #! format: off
 @safetestset "sparse_containers" begin; @time include("sparse_containers.jl"); end
-@safetestset "decomposed_tuples" begin; @time include("decomposed_tuples.jl"); end
+@safetestset "tuple_of_ntuples" begin; @time include("tuple_of_ntuples.jl"); end
 @safetestset "dispatch_basic" begin; @time include("dispatch_basic.jl"); end
 @safetestset "dispatch_regular_tuple" begin; @time include("dispatch_regular_tuple.jl"); end
 @safetestset "dispatch_example1" begin; @time include("dispatch_example1.jl"); end

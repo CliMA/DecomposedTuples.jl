@@ -1,4 +1,4 @@
-import DecomposedTuples as DT
+import TuplesOfNTuples as DT
 
 using Test
 @testset "SparseContainer" begin
