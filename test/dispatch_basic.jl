@@ -59,7 +59,7 @@ counter = Int[0]
 example!(dtup, f!, length(tup), counter)
 
 import InteractiveUtils
-InteractiveUtils.@code_warntype example!(dtup, f!, length(tup), counter)
+# InteractiveUtils.@code_warntype example!(dtup, f!, length(tup), counter)
 using Test
 @test counter[1] == sum((1, 100, 1000, 10000))
 
