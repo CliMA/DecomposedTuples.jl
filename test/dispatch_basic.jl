@@ -5,12 +5,9 @@ import TuplesOfNTuples as ToNT
 
 function example!(dtup, f, N::Int, counter)
     for i in 1:N # cannot be unrolled
-        # f(i, tup, args...) where tup is in args.
-        args = (counter,)
 
-        # Inlined, and fully unrolled
-
-        ToNT.dispatch(f, dtup, i, args...) # effectively calls f(tup[i], args...)
+        c = ToNT.inner_dispatch(f, dtup, i)
+        c(counter) # effectively calls f(tup[i], counter)
 
         # This unrolls to:
         #
@@ -63,7 +60,8 @@ import InteractiveUtils
 using Test
 @test counter[1] == sum((1, 100, 1000, 10000))
 
-@inferred ToNT.dispatch(f!, dtup, 1, counter)
+id = ToNT.inner_dispatch(f!, dtup, 1)
+@inferred id(counter)
 
 
 nothing

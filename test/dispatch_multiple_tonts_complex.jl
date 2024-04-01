@@ -3,14 +3,37 @@ using Revise; include(joinpath("test", "dispatch_multiple_tonts_complex.jl"))
 =#
 import TuplesOfNTuples as ToNT
 
-
-function inner_dispatch(dtB, g!::G!, ctr, dtA, j) where {G!}
-    ToNT.dispatch(g!, dtA, j, dtB, ctr)
-end
-
 function example!(dtupA, dtupB, f!, N::Int, counter)
     for i in 1:N
-        ToNT.dispatch(inner_dispatch, dtupB, i, f!, counter, dtupA, i)
+        fA = ToNT.inner_dispatch(f!, dtupA, i)
+        fB = ToNT.outer_dispatch(fA, dtupB, i)
+        fB(counter)
+
+        # `fB(counter)` unrolls to:
+        #
+        #      if hasindex(tupA.sparse_ntuples[1], i)
+        #          tA = tupA.sparse_ntuples[1]
+        #          if hasindex(tupB.sparse_ntuples[1], i)
+        #              tB = tupB.sparse_ntuples[1]
+        #              f(tA[i], tB[i], counter)
+        #          elseif hasindex(tup.sparse_ntuples[2], i)
+        #              tB = tupB.sparse_ntuples[2]
+        #              f(tA[i], tB[i], counter)
+        #          elseif ...
+        #          end
+        #      elseif hasindex(tupA.sparse_ntuples[2], i)
+        #          tA = tupA.sparse_ntuples[2]
+        #          if hasindex(tupB.sparse_ntuples[1], i)
+        #              tB = tupB.sparse_ntuples[1]
+        #              f(tA[i], tB[i], counter)
+        #          elseif hasindex(tup.sparse_ntuples[2], i)
+        #              tB = tupB.sparse_ntuples[2]
+        #              f(tA[i], tB[i], counter)
+        #          elseif ...
+        #          end
+        #      elseif ...
+        #      end
+
     end
     return nothing
 end

@@ -5,7 +5,8 @@ import TuplesOfNTuples as ToNT
 
 function example!(tonts, f, N::Int, counter)
     for i in 1:N
-        ToNT.dispatch(f, tonts, i, counter)
+        c = ToNT.inner_dispatch(f, tonts, i)
+        c(counter)
     end
     return nothing
 end
@@ -40,4 +41,5 @@ example!(dtup, f!, length(tup), counter)
 using Test
 @test counter[1] == sum((1, 100, 1000 * 3, 10000))
 
-@inferred ToNT.dispatch(f!, dtup, 1, counter)
+c = ToNT.inner_dispatch(f!, dtup, 1)
+@inferred c(counter)

@@ -3,66 +3,11 @@ using Revise; include(joinpath("test", "dispatch_multiple_tonts.jl"))
 =#
 import TuplesOfNTuples as ToNT
 
-
-function inner_dispatch(dtB, g!::G!, ctr, dtA, j) where {G!}
-    ToNT.dispatch(g!, dtA, j, dtB, ctr)
-end
-
 function example!(dtupA, dtupB, f!, N::Int, counter)
     for i in 1:N
-        ToNT.dispatch(inner_dispatch, dtupB, i, f!, counter, dtupA, i)
-
-        # Or, via anonymous function:
-        # ToNT.dispatch(dtupB, i, f!, counter, dtupA, i) do dtB, g!, ctr, dtA, j
-        #     ToNT.dispatch(g!, dtA, j, dtB, ctr)
-        # end
-
-        # ToNT.dispatch(f, dtup, i, args...)
-        # This unrolls to:
-        #      if hasindex(tup.sparse_ntuples[1], i)
-        #          inner_dispatch(dtupA.sparse_ntuples[1][i], args...)
-        #      elseif hasindex(tup.sparse_ntuples[2], i)
-        #          inner_dispatch(dtupA.sparse_ntuples[2][i], args...)
-        #      elseif ...
-        #      end
-
-        # This unrolls to:
-        #
-        #      tA_i = ToNT.outer_index(dtupA, i)
-        #      tB_i = ToNT.outer_index(dtupB, i)
-        #      f(tA[tA_i], tB[tB_i], args...)
-
-        # This unrolls to:
-        #
-        #      if hasindex(tupA.sparse_ntuples[1], i)
-        #          tA = tupA.sparse_ntuples[1]
-        #          if hasindex(tupB.sparse_ntuples[1], i)
-        #              tB = tupB.sparse_ntuples[1]
-        #              f(tA[i], tB[i], args...)
-        #          elseif hasindex(tup.sparse_ntuples[2], i)
-        #              tB = tupB.sparse_ntuples[2]
-        #              f(tA[i], tB[i], args...)
-        #          elseif ...
-        #          end
-        #      elseif hasindex(tupA.sparse_ntuples[2], i)
-        #          tA = tupA.sparse_ntuples[2]
-        #          if hasindex(tupB.sparse_ntuples[1], i)
-        #              tB = tupB.sparse_ntuples[1]
-        #              f(tA[i], tB[i], args...)
-        #          elseif hasindex(tup.sparse_ntuples[2], i)
-        #              tB = tupB.sparse_ntuples[2]
-        #              f(tA[i], tB[i], args...)
-        #          elseif ...
-        #          end
-        #      elseif ...
-        #      end
-        #
-        #  where tup.sparse_ntuples[j][i] is equivalent to tup[i]
-        #
-        # Two important points about this design are:
-        #  - tup.sparse_ntuples[1] is inferred, because 1 is not a dynamic index
-        #  - tup.sparse_ntuples[1][i] is inferred, because tup.sparse_ntuples[1] an NTuple
-
+        fA = ToNT.inner_dispatch(f!, dtupA, i)
+        fB = ToNT.outer_dispatch(fA, dtupB, i)
+        fB(counter)
     end
     return nothing
 end
