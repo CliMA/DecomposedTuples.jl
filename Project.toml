@@ -3,11 +3,7 @@ uuid = "48ce63ed-6f34-4d1b-af9f-4e5ab636a982"
 authors = ["CliMA Contributors <clima-software@caltech.edu>"]
 version = "0.1.0"
 
-[deps]
-OrderedCollections = "bac558e1-5e72-5ebc-8fee-abe8a469f55d"
-
 [compat]
-OrderedCollections = "1"
 julia = "^1.10"
 
 [extras]
