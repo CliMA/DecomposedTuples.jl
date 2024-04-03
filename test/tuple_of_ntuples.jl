@@ -28,3 +28,6 @@ dtup = ToNT.TupleOfNTuples(tup)
 @test dtup.sparse_ntuples[4][4] === tup[4]
 @test dtup.sparse_ntuples[3][5] === tup[5]
 @test dtup.sparse_ntuples[3][6] === tup[6]
+
+dtup = ToNT.TupleOfNTuples((Foo1(),))
+@test dtup.sparse_ntuples[1][1] === tup[1]

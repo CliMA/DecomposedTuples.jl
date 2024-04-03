@@ -8,7 +8,7 @@
     tont::Tuple{Tuple{}},
     tup::Tuple{<:Any},
     j::Int,
-) = ((1, tup[1]),)
+) = (((1, tup[1]),),)
 @inline _to_tuple_of_ntuples_pairs(
     tont::Tuple{Tuple{}},
     tup::Tuple{<:Any, <:Any},
