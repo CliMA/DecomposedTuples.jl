@@ -3,14 +3,21 @@ uuid = "48ce63ed-6f34-4d1b-af9f-4e5ab636a982"
 authors = ["CliMA Contributors <clima-software@caltech.edu>"]
 version = "0.2.1"
 
+[weakdeps]
+Adapt = "79e6a3ab-5dfb-504d-930d-738a2a938a0e"
+
+[extensions]
+AdaptExt = "Adapt"
+
 [compat]
 julia = "^1.10"
 
 [extras]
+Adapt = "79e6a3ab-5dfb-504d-930d-738a2a938a0e"
 BenchmarkTools = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
 InteractiveUtils = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
 SafeTestsets = "1bc83da4-3b8d-516f-aca4-4fe02f6d838f"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [targets]
-test = ["Test", "SafeTestsets", "BenchmarkTools", "InteractiveUtils"]
+test = ["Adapt", "Test", "SafeTestsets", "BenchmarkTools", "InteractiveUtils"]

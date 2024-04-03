@@ -13,4 +13,5 @@ using SafeTestsets
 @safetestset "dispatch_example2" begin; @time include("dispatch_example2.jl"); end
 @safetestset "dispatch_multiple_tonts" begin; @time include("dispatch_multiple_tonts.jl"); end
 @safetestset "dispatch_multiple_tonts_complex" begin; @time include("dispatch_multiple_tonts_complex.jl"); end
+@safetestset "extensions" begin; @time include("extensions.jl"); end
 #! format: on
