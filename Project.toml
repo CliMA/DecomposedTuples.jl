@@ -1,7 +1,7 @@
 name = "TuplesOfNTuples"
 uuid = "48ce63ed-6f34-4d1b-af9f-4e5ab636a982"
 authors = ["CliMA Contributors <clima-software@caltech.edu>"]
-version = "0.2.0"
+version = "0.2.1"
 
 [compat]
 julia = "^1.10"
